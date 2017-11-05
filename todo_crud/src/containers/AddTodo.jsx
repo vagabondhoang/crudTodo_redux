@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { addTodo } from '../actions/index.js';
+import { Input } from 'semantic-ui-react';
+
 
 class AddTodo extends Component {
   constructor(props) {
@@ -23,7 +25,8 @@ class AddTodo extends Component {
   render() {
     return (
       <form onSubmit={this.handleSubmit}>
-        <input 
+        <Input 
+        focus
         placeholder="please fill some text"
         onChange={event => this.setState({ todo: event.target.value })}
         />

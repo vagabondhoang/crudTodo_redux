@@ -6,8 +6,11 @@ export const addTodo = (todo) => ({
 
 export const deleteTodo = (todoId) => ({
   type: 'DELETE_TODO',
+  id: todoId
 })
 
-export const editTodo = (todoId) => ({
-  type: 'EDIT_TODO',
+export const updateTodo = (todoId, todo) => ({
+  type: 'UPDATE_TODO',
+  id: todoId,
+  text: todo
 })
