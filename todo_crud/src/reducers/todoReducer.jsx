@@ -26,11 +26,14 @@ export default function todoReducer(state = initialState, action) {
         ]
       };
     case 'UPDATE_TODO':
-      let id, todo;
+      let newOne = {
+        id: action.id,
+        todo: action.text
+      };
       return {
         ...state,
         todoLists: [
-          ...state.todoLists.map(todo => todo.id === action.id ? {id, todo: action.text} : todo)
+          ...state.todoLists.map(todo => todo.id === action.id ? newOne : todo)
         ]
       }
 

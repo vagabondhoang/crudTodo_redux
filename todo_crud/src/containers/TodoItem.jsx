@@ -29,7 +29,10 @@ class TodoItem extends Component {
     event.preventDefault();
     const newTodo = this.refs.editInput.value;
     const { id } = this.props;
-    this.props.updateTodo(id, newTodo)
+    this.props.updateTodo(id, newTodo);
+    this.setState({
+      isEditing: false
+    });
   }
 
   renderTodo() {
@@ -50,7 +53,7 @@ class TodoItem extends Component {
   }
 
   renderAction() {
-    const { id } = this.props; 
+    const { id } = this.props;
 
     if (this.state.isEditing) {
       return (
