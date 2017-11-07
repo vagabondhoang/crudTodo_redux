@@ -17,7 +17,7 @@ class Login extends Component {
     
     if(email === 'hoangtuananhnamdinh@gmail.com' && password === 'abc') {
       localStorage.setItem('email', email);
-      window.location.replace('http://localhost:3001/');
+      window.location.replace('http://localhost:3000/');
     } else {
       alert('Email or password is not correct')
     }
