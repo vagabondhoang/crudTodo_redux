@@ -1,40 +1,51 @@
-import Joi from 'joi';
 import { getAll, createTodo, deleteTodo, getTodo, updateTodo } from '../controllers/todoController';
+import { queryValidator, payloadValidator } from '../validation/todoValidation';
+import verifyUniqueTodo from '../queries/verifyTodo';
 
 const routes = [
   {
     method: 'GET',
-    path: '/getAll',
+    path: '/todos',
     handler: getAll,
   }, {
     method: 'POST',
-    path: '/createTodo',
-    handler: createTodo,
+    path: '/todo',
     config: {
       validate: {
-        payload: {
-          title: Joi.string().min(3).max(50).required(),
-        },
+        payload: payloadValidator,
       },
+      pre: [
+        { method: verifyUniqueTodo },
+      ],
+      handler: createTodo,
     },
   }, {
     method: 'DELETE',
-    path: '/deleteTodo/id',
-    handler: deleteTodo,
-  }, {
-    method: 'GET',
-    path: '/getTodo/{id}',
-    handler: getTodo,
-  }, {
-    method: 'PUT',
-    path: '/updateTodo/{id}',
-    handler: updateTodo,
+    path: '/todo/id',
     config: {
       validate: {
-        payload: {
-          title: Joi.string().min(3).max(50).required(),
-        },
+        query: queryValidator,
       },
+      handler: deleteTodo,
+    },
+  }, {
+    method: 'GET',
+    path: '/todo/{id}',
+    config: {
+      validate: {
+        query: queryValidator,
+      },
+      handler: getTodo,
+    },
+  }, {
+    method: 'PUT',
+    path: '/todo/{id}',
+    config: {
+      validate: {
+        payload: payloadValidator,
+        query: queryValidator,
+      },
+      handler: updateTodo,
     },
   },
 ];

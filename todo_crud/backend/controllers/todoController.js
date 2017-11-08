@@ -1,52 +1,53 @@
+import Boom from 'boom';
 import DBTodo from '../models/Todo';
 
-export const getAll = (request, reply) => {
-
-  DBTodo.find({}, (err, todo) => {
-    if (err) {
-      throw new Error(`Something wrong with ${err}`);
-    }
-    reply(todo);
-  });
+export const getAll = async (request, reply) => {
+  console.log("getAll >> ");
+  try {
+    const allTodo = await DBTodo.find({});
+    console.log("hihi >> ", allTodo);
+    reply(allTodo);
+  } catch (err) {
+    console.log("err >> ", err);
+    reply(Boom.notFound(`No todo found ${err}`));
+  }
 };
 
-export const createTodo = (request, reply) => {
-  const { title } = request.payload;
-  DBTodo.create({ title }, (err, todo) => {
-    if (err) {
-      throw new Error(`Something wrong with ${err}`);
-    }
-
-    reply(todo);
-  });
+export const createTodo = async (request, reply) => {
+  try {
+    const { title } = request.payload;
+    const createTodo = await DBTodo.create({ title });
+    reply(createTodo);
+  } catch (err) {
+    reply(Boom.badRequest(`Something is wrong with ${err}`));
+  }
 };
 
-export const deleteTodo = (request, reply) => {
-  DBTodo.findById({ _id: request.params.id }, (err, todo) => {
-    if (err) {
-      throw new Error(`Something wrong with ${err}`);
-    }
+export const deleteTodo = async (request, reply) => {
+  try {
+    const todo = await DBTodo.findById({ _id: request.params.id });
     todo.remove();
     reply('Todo has deleted');
-  });
+  } catch (err) {
+    reply(Boom.badRequest(`Something is wrong with ${err}`));
+  }
 };
 
-export const getTodo = (request, reply) => {
-  DBTodo.findById({ _id: request.params.id }, (err, todo) => {
-    if (err) {
-      throw new Error(`Something wrong with ${err}`);
-    }
-
+export const getTodo = async (request, reply) => {
+  try {
+    const todo = await DBTodo.findById({ _id: request.params.id });
     reply(todo);
-  });
+  } catch (err) {
+    reply(Boom.badRequest(`Something is wrong with ${err}`));
+  }
 };
 
-export const updateTodo = (request, reply) => {
-  const { title } = request.payload;
-  DBTodo.findOneAndUpdate({ _id: request.params.id }, { title }, (err) => {
-    if (err) {
-      throw new Error(`Something wrong with ${err}`);
-    }
-    reply('todo is updated');
-  });
+export const updateTodo = async (request, reply) => {
+  try {
+    const { title } = request.payload;
+    const updateTodo = await DBTodo.findOneAndUpdate({ _id: request.params.id });
+    reply(updateTodo);
+  } catch (err) {
+    reply(Boom.badRequest(`Something is wrong with ${err}`));
+  }
 };

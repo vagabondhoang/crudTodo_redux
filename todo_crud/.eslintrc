@@ -1,15 +1,24 @@
 {
-  "extends": "airbnb/base",
-  "parserOptions": {
-      "ecmaVersion": 6
-  },
-  "rules": {
-      "func-names": ["error", "never"]
-  },
-  "env": {
-      "browser": true,
-      "node": true,
-      "mocha": true,
-      "es6": true
-  }
+    "extends": "airbnb/base",
+    "parserOptions": {
+        "ecmaVersion": 6,
+        "ecmaFeatures": {
+            "jsx": true
+        }
+    },
+    "rules": {
+        "func-names": ["error", "never"],
+        "react/jsx-uses-react": "error",
+        "react/jsx-uses-vars": "error"
+    },
+    "env": {
+        "browser": true,
+        "node": true,
+        "mocha": true,
+        "es6": true
+    },
+    "plugins": [
+        "jsx-a11y",
+        "react"
+    ]
 }
