@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
-import todoReducer from './todoReducer';
+import todoReducer from './todoReducer.jsx';
 
 const rootReducer = combineReducers({
-  todoReducer
-})
+  todoReducer,
+});
 
 export default rootReducer;

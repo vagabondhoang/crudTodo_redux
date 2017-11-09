@@ -20,5 +20,6 @@
     "plugins": [
         "jsx-a11y",
         "react"
-    ]
+    ],
+    "parser": "babel-eslint",
 }

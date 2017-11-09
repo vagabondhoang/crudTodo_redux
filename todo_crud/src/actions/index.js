@@ -15,7 +15,7 @@ export const updateTodo = (todoId, todo) => ({
   text: todo,
 });
 
-export const getTodos = todos => ({
-  type: 'GET_TODOS',
-  todos,
+export const fetchTodos = todos => ({
+  type: 'FETCH_TODOS',
+  payload: todos,
 });

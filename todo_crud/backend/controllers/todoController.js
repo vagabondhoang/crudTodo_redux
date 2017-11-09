@@ -2,13 +2,10 @@ import Boom from 'boom';
 import DBTodo from '../models/Todo';
 
 export const getAll = async (request, reply) => {
-  console.log("getAll >> ");
   try {
     const allTodo = await DBTodo.find({});
-    console.log("hihi >> ", allTodo);
     reply(allTodo);
   } catch (err) {
-    console.log("err >> ", err);
     reply(Boom.notFound(`No todo found ${err}`));
   }
 };
@@ -16,8 +13,8 @@ export const getAll = async (request, reply) => {
 export const createTodo = async (request, reply) => {
   try {
     const { title } = request.payload;
-    const createTodo = await DBTodo.create({ title });
-    reply(createTodo);
+    const todoCreate = await DBTodo.create({ title });
+    reply(todoCreate);
   } catch (err) {
     reply(Boom.badRequest(`Something is wrong with ${err}`));
   }
@@ -45,8 +42,12 @@ export const getTodo = async (request, reply) => {
 export const updateTodo = async (request, reply) => {
   try {
     const { title } = request.payload;
-    const updateTodo = await DBTodo.findOneAndUpdate({ _id: request.params.id });
-    reply(updateTodo);
+    const todoUpdate = await DBTodo.findOneAndUpdate(
+      { _id: request.params.id },
+      { title },
+      { new: true },
+    );
+    reply(todoUpdate);
   } catch (err) {
     reply(Boom.badRequest(`Something is wrong with ${err}`));
   }

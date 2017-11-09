@@ -6,6 +6,7 @@ const server = new Hapi.Server();
 server.connection({
   port: 8080,
   host: 'localhost',
+  routes: { cors: true },
 });
 
 server.route(routes);

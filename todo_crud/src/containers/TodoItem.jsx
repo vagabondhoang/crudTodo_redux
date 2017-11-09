@@ -12,8 +12,6 @@ class TodoItem extends Component {
 
     this.renderAction = this.renderAction.bind(this);
     this.editTodo = this.editTodo.bind(this);
-    this.updateTodo = this.updateTodo.bind(this);
-    this.deleteTodo = this.deleteTodo.bind(this);
   }
 
   editTodo() {
@@ -26,50 +24,58 @@ class TodoItem extends Component {
       isEditing: false,
     });
   }
-  updateTodo(event) {
-    event.preventDefault();
-    const newTodo = this.refs.editInput.value;
-    const { id } = this.props;
-    const url = `http://localhost:8080/todo/${id}`;
-    fetch(url, {
-      method: 'PUT',
-      id,
-      title: newTodo,
-    })
-      .then((response) => {
-        this.props.updateTodo(response.data.id, response.data.title);
-        this.setState({
-          isEditing: false,
-        });
+  updateTodo = async (event) => {
+    try {
+      event.preventDefault();
+      const newTodo = this.refs.editInput.value;
+      const { _id } = this.props;
+      const url = `http://localhost:8080/todo/${_id}`;
+      await fetch(url, {
+        method: 'PUT',
+        body: JSON.stringify({
+          title: newTodo,
+        }),
       });
+      this.props.updateTodo(_id, newTodo);
+      this.setState({
+        isEditing: false,
+      });
+    } catch (err) {
+      console.log(err);// eslint-disable-line no-console
+    }
   }
 
   renderTodo() {
-    const { todo } = this.props;
+    const { title } = this.props;
 
     if (this.state.isEditing) {
       return (
         <td>
           <form onSubmit={this.updateTodo}>
-            <input type="text" defaultValue={todo} ref="editInput" />
+            <input type="text" defaultValue={title} ref="editInput" />
           </form>
         </td>
       );
     }
     return (
-      <td>{todo}</td>
+      <td>{title}</td>
     );
   }
 
-  deleteTodo() {
-    const { id } = this.props;
-    const url = `http://localhost:8080/todo/${id}`;
-    fetch(url, {
-      method: 'DELETE',
-      id,
-    })
-      .then(response => this.props.deleteTodo(response.data.id))
-      .catch(err => console.log(err));// eslint-disable-line no-console
+  deleteTodo = async () => {
+    const { _id } = this.props;
+    const url = `http://localhost:8080/todo/${_id}`;
+    try {
+      await fetch(url, {
+        method: 'DELETE',
+        body: JSON.stringify({
+          _id,
+        }),
+      });
+      this.props.deleteTodo(_id);
+    } catch (err) {
+      console.log(err);// eslint-disable-line no-console
+    }
   }
 
   renderAction() {
@@ -84,7 +90,7 @@ class TodoItem extends Component {
     return (
       <td>
         <button onClick={this.editTodo}>Edit</button>
-        <button onClick={() => this.deleteTodo()}>Delete</button>
+        <button onClick={this.deleteTodo}>Delete</button>
       </td>
     );
   }

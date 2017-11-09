@@ -1,49 +1,30 @@
-const initialState = {
-  todoLists: [],
-};
-
-export default function todoReducer(state = initialState, action) {
+export default function todoReducer(state = [], action) {
   switch (action.type) {
-    case 'GET_TODOS':
-      return {
+    case 'FETCH_TODOS':
+      return [
         ...state,
-        todoLists: [
-          ...state.todoLists,
-          action.todos,
-        ]
-      };
-    case 'ADD_TODO': {
-      const newTodo = {
-        id: action.id,
-        todo: action.text,
-      };
-
-      return {
+        action.payload,
+      ];
+    case 'ADD_TODO':
+      return [
         ...state,
-        todoLists: [
-          ...state.todoLists,
-          newTodo,
-        ],
-      };
-    }
+        {
+          id: action.id,
+          title: action.text,
+        },
+      ];
     case 'DELETE_TODO':
-      return {
-        ...state,
-        todoLists: [
-          ...state.todoLists.filter(todo => todo.id !== action.id),
-        ],
-      };
+      return [
+        ...state.filter(todo => todo.id !== action.id),
+      ];
     case 'UPDATE_TODO': {
       const newOne = {
         id: action.id,
-        todo: action.text,
+        title: action.text,
       };
-      return {
-        ...state,
-        todoLists: [
-          ...state.todoLists.map(todo => (todo.id === action.id ? newOne : todo)),
-        ],
-      };
+      return [
+        ...state.map(todo => (todo.id === action.id ? newOne : todo)),
+      ];
     }
     default: return state;
   }

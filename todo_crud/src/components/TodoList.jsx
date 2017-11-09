@@ -1,27 +1,32 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
 import TodoItem from '../containers/TodoItem.jsx';
-import { getTodos } from '../actions/index';
+import { fetchTodos } from '../actions';
 
 class TodoList extends Component {
   constructor(props) {
     super(props);
-    this.getTodos = this.getTodos.bind(this);
+    this.state = {
+      todos: this.props.todos,
+    };
   }
-  getTodos() {
+
+  fetchTodos() {
     const url = 'http://localhost:8080/todos';
-    const todo = this.props.todos;
-    fetch(url, {
-      method: 'GET',
-      todo,
-    })
-      .then(response => this.props.getTodos(response.data.todo))
+    fetch(url)
+      .then(response => response.json())
+      .then((data) => {
+        this.props.fetchTodos(data);
+        this.setState({ todos: data });
+      })
       .catch(err => console.log(err));// eslint-disable-line no-console
   }
+
+  componentWillMount() {
+    this.fetchTodos();
+  }
+
   render() {
-    const todos = this.getTodos();
-    console.log(todos);
     return (
       <div>
         <table>
@@ -32,10 +37,7 @@ class TodoList extends Component {
             </tr>
           </thead>
           <tbody>
-              {todos.map(todo => <TodoItem
-                {...todo}
-                key={todo.id}
-              />)}
+              {this.state.todos.map(todo => <TodoItem key={todo._id} {...todo} />) }
           </tbody>
         </table>
       </div>
@@ -43,13 +45,11 @@ class TodoList extends Component {
   }
 }
 
-
-const mapStateToProps = state => ({
-  todos: state.todoReducer.todoLists,
-});
-
-TodoList.propTypes = {
-  todos: PropTypes.array.isRequired,
+const mapStateToProps = (state) => {
+  return {
+    todos: state.todoReducer,
+  };
 };
 
-export default connect(mapStateToProps, { getTodos })(TodoList);
+
+export default connect(mapStateToProps, { fetchTodos })(TodoList);

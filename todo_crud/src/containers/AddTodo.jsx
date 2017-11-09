@@ -13,17 +13,20 @@ class AddTodo extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleSubmit(e) {
-    e.preventDefault();
-    const url = 'http://localhost:8080/todo';
-    const todo = this.state.todo.trim();
-    if (todo !== '') {
-      fetch(url, {
-        method: 'POST',
-        title: todo,
-      })
-        .then(response => this.props.addTodo(response.data.title))
-        .catch(err => console.log(err));// eslint-disable-line no-console
+  handleSubmit = async (e) => {
+    try {
+      e.preventDefault();
+      const url = 'http://localhost:8080/todo';
+      const todo = this.state.todo.trim();
+      if (todo !== '') {
+        await fetch(url, {
+          method: 'POST',
+          body: JSON.stringify({ title: todo }),
+        });
+        this.props.addTodo(todo);
+      }
+    } catch (err) {
+      console.log(err);// eslint-disable-line no-console
     }
   }
 
