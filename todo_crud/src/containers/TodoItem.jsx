@@ -68,9 +68,6 @@ class TodoItem extends Component {
     try {
       await fetch(url, {
         method: 'DELETE',
-        body: JSON.stringify({
-          _id,
-        }),
       });
       this.props.deleteTodo(_id);
     } catch (err) {
@@ -106,7 +103,6 @@ class TodoItem extends Component {
 }
 
 TodoItem.propTypes = {
-  todo: PropTypes.string.isRequired,
   deleteTodo: PropTypes.func.isRequired,
   updateTodo: PropTypes.func.isRequired,
 };

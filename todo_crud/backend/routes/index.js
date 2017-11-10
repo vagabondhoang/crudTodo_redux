@@ -21,7 +21,7 @@ const routes = [
     },
   }, {
     method: 'DELETE',
-    path: '/todo/id',
+    path: '/todo/{id}',
     config: {
       validate: {
         query: queryValidator,

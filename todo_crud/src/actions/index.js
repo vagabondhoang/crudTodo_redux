@@ -1,17 +1,17 @@
-export const addTodo = todo => ({
+export const addTodo = (id, todo) => ({
   type: 'ADD_TODO',
   text: todo,
-  id: Date.now(),
+  _id: id,
 });
 
 export const deleteTodo = todoId => ({
   type: 'DELETE_TODO',
-  id: todoId,
+  _id: todoId,
 });
 
 export const updateTodo = (todoId, todo) => ({
   type: 'UPDATE_TODO',
-  id: todoId,
+  _id: todoId,
   text: todo,
 });
 

@@ -19,11 +19,12 @@ class AddTodo extends Component {
       const url = 'http://localhost:8080/todo';
       const todo = this.state.todo.trim();
       if (todo !== '') {
-        await fetch(url, {
+        fetch(url, {
           method: 'POST',
           body: JSON.stringify({ title: todo }),
-        });
-        this.props.addTodo(todo);
+        })
+          .then(response => response.json())
+          .then(data => this.props.addTodo(data._id, data.title));
       }
     } catch (err) {
       console.log(err);// eslint-disable-line no-console

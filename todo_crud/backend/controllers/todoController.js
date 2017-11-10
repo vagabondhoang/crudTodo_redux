@@ -22,8 +22,7 @@ export const createTodo = async (request, reply) => {
 
 export const deleteTodo = async (request, reply) => {
   try {
-    const todo = await DBTodo.findById({ _id: request.params.id });
-    todo.remove();
+    await DBTodo.findByIdAndRemove({ _id: request.params.id });
     reply('Todo has deleted');
   } catch (err) {
     reply(Boom.badRequest(`Something is wrong with ${err}`));

@@ -3,27 +3,28 @@ export default function todoReducer(state = [], action) {
     case 'FETCH_TODOS':
       return [
         ...state,
-        action.payload,
+        ...action.payload,
       ];
-    case 'ADD_TODO':
+    case 'ADD_TODO': {
       return [
         ...state,
         {
-          id: action.id,
+          _id: action._id,
           title: action.text,
         },
       ];
+    }
     case 'DELETE_TODO':
       return [
-        ...state.filter(todo => todo.id !== action.id),
+        ...state.filter(todo => todo._id !== action._id),
       ];
     case 'UPDATE_TODO': {
       const newOne = {
-        id: action.id,
+        _id: action._id,
         title: action.text,
       };
       return [
-        ...state.map(todo => (todo.id === action.id ? newOne : todo)),
+        ...state.map(todo => (todo._id === action._id ? newOne : todo)),
       ];
     }
     default: return state;
