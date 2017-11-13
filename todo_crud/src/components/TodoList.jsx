@@ -1,19 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import TodoItem from '../containers/TodoItem.jsx';
-import { fetchTodos } from '../actions';
+import { fetchTodosRequest } from '../actions';
 
 class TodoList extends Component {
   fetchTodos() {
-    const url = 'http://localhost:8080/todos';
-    fetch(url)
-      .then(response => response.json())
-      .then((data) => {
-        this.props.fetchTodos(data);
-      })
-      .catch(err => console.log(err));// eslint-disable-line no-console
+    this.props.fetchTodosRequest();
   }
-
   componentWillMount() {
     this.fetchTodos();
   }
@@ -29,7 +22,7 @@ class TodoList extends Component {
             </tr>
           </thead>
           <tbody>
-              {this.props.todos.map(todo => <TodoItem key={todo._id} {...todo} />) }
+              {this.props.todos.map((todo, index) => <TodoItem key={index} {...todo} />) }
           </tbody>
         </table>
       </div>
@@ -42,4 +35,4 @@ const mapStateToProps = state => ({
 });
 
 
-export default connect(mapStateToProps, { fetchTodos })(TodoList);
+export default connect(mapStateToProps, { fetchTodosRequest })(TodoList);

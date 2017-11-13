@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware  } from 'redux';
+import createSagaMiddleware from 'redux-saga';
 import { Provider } from 'react-redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
@@ -8,8 +9,11 @@ import rootReducer from './reducers';
 import './index.css';
 import App from './App.jsx';
 import Login from './authentication/Login';
+import rootSaga from './sagas/index';
 
 import registerServiceWorker from './registerServiceWorker';
+
+const sagaMiddleware = createSagaMiddleware();
 
 const isLoggedIn = () => {
   const email = localStorage.getItem('email');
@@ -19,15 +23,20 @@ const isLoggedIn = () => {
   return false;
 };
 
-const store = createStore(rootReducer, composeWithDevTools());
+const store = createStore(
+  rootReducer,
+  composeWithDevTools(applyMiddleware(sagaMiddleware)),
+);
+
+sagaMiddleware.run(rootSaga);
 
 ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter>
       <Switch>
-        <Route exact path='/' render={() => isLoggedIn() ? <App /> : <Redirect to='/login' />} />
+        <Route exact path='/' render={() => (isLoggedIn() ? <App /> : <Redirect to='/login' />)} />
         <Route path='/login'
-          render={() => isLoggedIn() ? <Redirect to="/" /> : <Login />}
+          render={() => (isLoggedIn() ? <Redirect to="/" /> : <Login />)}
         />
       </Switch>
     </BrowserRouter>

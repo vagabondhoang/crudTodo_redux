@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { deleteTodo, updateTodo } from '../actions/index';
+import { deleteTodoRequest, updateTodoRequest } from '../actions/index';
 
 class TodoItem extends Component {
   constructor(props) {
@@ -29,14 +29,7 @@ class TodoItem extends Component {
       event.preventDefault();
       const newTodo = this.refs.editInput.value;
       const { _id } = this.props;
-      const url = `http://localhost:8080/todo/${_id}`;
-      await fetch(url, {
-        method: 'PUT',
-        body: JSON.stringify({
-          title: newTodo,
-        }),
-      });
-      this.props.updateTodo(_id, newTodo);
+      this.props.updateTodoRequest(_id, newTodo);
       this.setState({
         isEditing: false,
       });
@@ -62,17 +55,9 @@ class TodoItem extends Component {
     );
   }
 
-  deleteTodo = async () => {
+  deleteTodo = () => {
     const { _id } = this.props;
-    const url = `http://localhost:8080/todo/${_id}`;
-    try {
-      await fetch(url, {
-        method: 'DELETE',
-      });
-      this.props.deleteTodo(_id);
-    } catch (err) {
-      console.log(err);// eslint-disable-line no-console
-    }
+    this.props.deleteTodoRequest(_id);
   }
 
   renderAction() {
@@ -103,9 +88,9 @@ class TodoItem extends Component {
 }
 
 TodoItem.propTypes = {
-  deleteTodo: PropTypes.func.isRequired,
-  updateTodo: PropTypes.func.isRequired,
+  deleteTodoRequest: PropTypes.func.isRequired,
+  updateTodoRequest: PropTypes.func.isRequired,
 };
 
-export default connect(null, { deleteTodo, updateTodo })(TodoItem);
+export default connect(null, { deleteTodoRequest, updateTodoRequest })(TodoItem);
 

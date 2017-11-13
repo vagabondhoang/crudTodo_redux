@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { addTodo } from '../actions/index';
+import { addTodoRequest } from '../actions/index';
 
 
 class AddTodo extends Component {
@@ -16,16 +16,8 @@ class AddTodo extends Component {
   handleSubmit = async (e) => {
     try {
       e.preventDefault();
-      const url = 'http://localhost:8080/todo';
       const todo = this.state.todo.trim();
-      if (todo !== '') {
-        fetch(url, {
-          method: 'POST',
-          body: JSON.stringify({ title: todo }),
-        })
-          .then(response => response.json())
-          .then(data => this.props.addTodo(data._id, data.title));
-      }
+      this.props.addTodoRequest(todo);
     } catch (err) {
       console.log(err);// eslint-disable-line no-console
     }
@@ -43,4 +35,4 @@ class AddTodo extends Component {
   }
 }
 
-export default connect(null, { addTodo })(AddTodo);
+export default connect(null, { addTodoRequest })(AddTodo);
