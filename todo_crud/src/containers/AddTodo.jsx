@@ -17,6 +17,9 @@ class AddTodo extends Component {
     try {
       e.preventDefault();
       const todo = this.state.todo.trim();
+      if (todo.length < 3 || todo.length > 50) {
+        return alert('todo should have at least 3 characters and no more than 50');
+      }
       this.props.addTodoRequest(todo);
     } catch (err) {
       console.log(err);// eslint-disable-line no-console

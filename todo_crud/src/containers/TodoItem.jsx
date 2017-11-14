@@ -52,6 +52,7 @@ class TodoItem extends Component {
     }
     return (
       <td>{title}</td>
+      
     );
   }
 
