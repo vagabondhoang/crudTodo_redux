@@ -4,19 +4,14 @@ import { addTodoRequest } from '../actions/index';
 
 
 class AddTodo extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      todo: '',
-    };
-
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
+  state = {
+    todo: '',
+  };
 
   handleSubmit = async (e) => {
     try {
       e.preventDefault();
-      const todo = this.state.todo.trim();
+      const todo = await this.state.todo.trim();
       if (todo.length < 3 || todo.length > 50) {
         return alert('todo should have at least 3 characters and no more than 50');
       }

@@ -4,22 +4,16 @@ import { connect } from 'react-redux';
 import { deleteTodoRequest, updateTodoRequest } from '../actions/index';
 
 class TodoItem extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isEditing: false,
-    };
+  state = {
+    isEditing: false,
+  };
 
-    this.renderAction = this.renderAction.bind(this);
-    this.editTodo = this.editTodo.bind(this);
-  }
-
-  editTodo() {
+  editTodo = () => {
     this.setState({
       isEditing: true,
     });
   }
-  handleCancel() {
+  handleCancel = () => {
     this.setState({
       isEditing: false,
     });
@@ -38,7 +32,7 @@ class TodoItem extends Component {
     }
   }
 
-  renderTodo() {
+  renderTodo = () => {
     const { title } = this.props;
 
     if (this.state.isEditing) {
@@ -52,7 +46,6 @@ class TodoItem extends Component {
     }
     return (
       <td>{title}</td>
-      
     );
   }
 

@@ -1,11 +1,13 @@
-import { takeLatest, put } from 'redux-saga/effects';
+import { takeLatest, put, call } from 'redux-saga/effects';
+import api from './api';
 import { fetchTodosSuccessed, fetchTodosFailed } from '../actions';
 
 function* fetchTodos() {
   try {
-    const url = 'http://localhost:8080/todos';
-    const response = yield fetch(url);
-    const data = yield response.json();
+    const data = yield call(
+      api,
+      'http://localhost:8080/todos',
+    );
     if (data) {
       yield put(fetchTodosSuccessed(data));
     }

@@ -1,15 +1,26 @@
-import { put, takeLatest } from 'redux-saga/effects';
-import { addTodoSuccess, addTodoFail } from '../actions';
+import {
+  put,
+  takeLatest,
+  call,
+} from 'redux-saga/effects';
+import api from './api';
+import {
+  addTodoSuccess,
+  addTodoFail,
+} from '../actions';
 
-function* addTodo(action) {
+export function* addTodo(action) {
   try {
     const { text } = action;
-    const url = 'http://localhost:8080/todo';
-    const response = yield fetch(url, {
-      method: 'POST',
-      body: JSON.stringify({ title: text }),
-    });
-    const data = yield response.json();
+    const data = yield call(
+      api,
+      'http://localhost:8080/todo', {
+        method: 'POST',
+        body: JSON.stringify({
+          title: text,
+        }),
+      },
+    );
     if (data) {
       yield put(addTodoSuccess(data._id, data.title)); // eslint-disable-line
     } else {
@@ -20,6 +31,10 @@ function* addTodo(action) {
   }
 }
 
-export default function* watchAddTodo() {
+export function* watchAddTodo() {
   yield takeLatest('ADD_TODO_REQUEST', addTodo);
 }
+
+export default [
+  watchAddTodo,
+];

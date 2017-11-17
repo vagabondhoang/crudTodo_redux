@@ -1,7 +1,7 @@
 {
     "extends": "airbnb/base",
     "parserOptions": {
-        "ecmaVersion": 6,
+        "ecmaVersion": 2016,
         "ecmaFeatures": {
             "jsx": true
         }
@@ -16,11 +16,12 @@
         "browser": true,
         "node": true,
         "mocha": true,
-        "es6": true
+        "es6": true,
+        "jest": true
     },
     "plugins": [
         "jsx-a11y",
         "react"
     ],
-    "parser": "babel-eslint",
+    "parser": "babel-eslint"
 }

@@ -4,14 +4,11 @@ import TodoItem from '../containers/TodoItem.jsx';
 import { fetchTodosRequest } from '../actions';
 
 class TodoList extends Component {
-  fetchTodos() {
+  componentWillMount() {
     this.props.fetchTodosRequest();
   }
-  componentWillMount() {
-    this.fetchTodos();
-  }
-
   render() {
+    console.log('mapp', this.props.todos);
     return (
       <div>
         <table>
@@ -22,7 +19,7 @@ class TodoList extends Component {
             </tr>
           </thead>
           <tbody>
-              {this.props.todos.map((todo, index) => <TodoItem key={index} {...todo} />) }
+              {this.props.todos.map(todo => <TodoItem key={todo._id} {...todo} />) }
           </tbody>
         </table>
       </div>
@@ -34,5 +31,9 @@ const mapStateToProps = state => ({
   todos: state.todoReducer,
 });
 
+export const mapDispatchToProps = dispatch => ({
+  fetchTodosRequest: () => dispatch(fetchTodosRequest()),
+});
 
-export default connect(mapStateToProps, { fetchTodosRequest })(TodoList);
+
+export default connect(mapStateToProps, mapDispatchToProps)(TodoList);

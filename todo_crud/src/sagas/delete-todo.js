@@ -1,4 +1,5 @@
-import { takeLatest, put } from 'redux-saga/effects';
+import { takeLatest, put, call } from 'redux-saga/effects';
+import api from './api';
 import { deleteTodoSuccessed, deleteTodoFailed } from '../actions';
 
 function* deleteTodo(action) {
@@ -8,6 +9,13 @@ function* deleteTodo(action) {
     yield fetch(url, {
       method: 'DELETE',
     });
+    // yield call(
+    //   api,
+    //   `http://localhost:8080/todo/${_id}`,
+    //   {
+    //     method: 'DELETE',
+    //   },
+    // );
     yield put(deleteTodoSuccessed(_id));
   } catch (err) {
     put(deleteTodoFailed());

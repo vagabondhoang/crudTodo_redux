@@ -1,0 +1,52 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`addTodo Saga should dispatch the addTodoFail action if it requests the data failure 1`] = `
+Object {
+  "@@redux-saga/IO": true,
+  "CALL": Object {
+    "args": Array [
+      "http://localhost:8080/todo",
+      Object {
+        "body": "{}",
+        "method": "POST",
+      },
+    ],
+    "context": null,
+    "fn": [Function],
+  },
+}
+`;
+
+exports[`addTodo Saga should dispatch the addTodoFail action if it requests the data failure 2`] = `
+Object {
+  "@@redux-saga/IO": true,
+  "CALL": Object {
+    "args": Array [
+      "http://localhost:8080/todo",
+      Object {
+        "body": "{}",
+        "method": "POST",
+      },
+    ],
+    "context": null,
+    "fn": [Function],
+  },
+}
+`;
+
+exports[`addTodo Saga should dispatch the addTodoSuccess action if it requests the data successfully 1`] = `
+Object {
+  "@@redux-saga/IO": true,
+  "CALL": Object {
+    "args": Array [
+      "http://localhost:8080/todo",
+      Object {
+        "body": "{}",
+        "method": "POST",
+      },
+    ],
+    "context": null,
+    "fn": [Function],
+  },
+}
+`;
