@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { deleteTodoRequest, updateTodoRequest } from '../actions/index';
 
-class TodoItem extends Component {
+export class TodoItem extends Component {
   state = {
     isEditing: false,
   };

@@ -3,12 +3,12 @@ import { connect } from 'react-redux';
 import TodoItem from '../containers/TodoItem.jsx';
 import { fetchTodosRequest } from '../actions';
 
-class TodoList extends Component {
+export class TodoList extends Component {
   componentWillMount() {
     this.props.fetchTodosRequest();
   }
   render() {
-    console.log('mapp', this.props.todos);
+    // console.log('mapp', this.props.todos);
     return (
       <div>
         <table>
